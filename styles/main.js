@@ -2,7 +2,9 @@ const userGuess = document.getElementById('userGuess');
 const submitButton = document.getElementById('submitButton');
 const questionElement = document.getElementById('question'); 
 const outputElement = document.getElementById('output');
-
+const nextBtn = document.getElementById('nextBtn');
+nextBtn.style.pointerEvents = 'none';  // Disable clicking
+nextBtn.style.opacity = '0.5';   
 const questions = [
     { question: 'What is 5-2?', answer: 3 },
     { question: 'What is 5+7?', answer: 12 },
@@ -22,6 +24,8 @@ function displayQuestion(){
         questionElement.textContent = "Congratulation! You completed all questions!";
         userGuess.style.display = 'none'
         submitButton.style.display = 'none'
+        nextBtn.style.pointerEvents = 'auto';  // enable clicking
+        nextBtn.style.opacity = '1';   
 
     }
 }
