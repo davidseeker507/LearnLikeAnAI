@@ -4,13 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Unsupervised Learning Game</title>
+    <link rel="stylesheet" href="/styles/main.css">
 </head>
 <body>
-    <h1 id="question">Find the Pattern</h1>
-    <p>Look at these sequences and find what comes next. There are no "correct" answers - just patterns to discover!</p>
-    <div id="sequence"></div>
-    <input id="userGuess" type="text" placeholder="What comes next?">
-    <button id="submitButton">Submit</button>
+    <h1 id="question">Image Clustering Challenge</h1>
+    <p>You are an AI model. You see images as raw data (pixel values), not as pictures. Find which images belong to the same group by analyzing their data patterns.</p>
+    <p>Round <span id="round">1</span> of <span id="totalRounds">3</span></p>
+    <div id="images"></div>
+    <p id="instruction">Select which images have similar data patterns:</p>
+    <div id="selections"></div>
+    <button id="submitButton">Submit Group</button>
     <p id="output"></p>
     <a href="unsupervised3.html" id="nextBtn">Next</a>
     <script src="/styles/unsupervised.js"></script>
