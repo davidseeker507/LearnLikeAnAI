@@ -1,0 +1,26 @@
+{
+  "rewrites": [
+    {
+      "source": "/start.html",
+      "destination": "/Public/start.html"
+    },
+    {
+      "source": "/learnmore.html",
+      "destination": "/Public/learnmore.html"
+    },
+    {
+      "source": "/supervised/:path*",
+      "destination": "/Public/supervised/:path*"
+    },
+    {
+      "source": "/unsupervised/:path*",
+      "destination": "/Public/unsupervised/:path*"
+    },
+    {
+      "source": "/reinforcement/:path*",
+      "destination": "/Public/reinforcement/:path*"
+    }
+  ],
+  "cleanUrls": false
+}
+
