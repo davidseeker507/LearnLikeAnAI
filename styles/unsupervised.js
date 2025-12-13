@@ -6,8 +6,10 @@ const outputElement = document.getElementById('output');
 const roundElement = document.getElementById('round');
 const totalRoundsElement = document.getElementById('totalRounds');
 const nextBtn = document.getElementById('nextBtn');
-nextBtn.style.pointerEvents = 'none';
-nextBtn.style.opacity = '0.5';
+if (nextBtn) {
+    nextBtn.style.pointerEvents = 'none';
+    nextBtn.style.opacity = '0.5';
+}
 
 let currentRound = 0;
 let selectedImages = [];
@@ -73,6 +75,9 @@ function displayRound() {
             imageDiv.style.margin = '10px';
             imageDiv.style.display = 'inline-block';
             imageDiv.style.cursor = 'pointer';
+            imageDiv.style.transition = 'all 0.3s ease';
+            imageDiv.style.opacity = '0';
+            imageDiv.style.transform = 'scale(0.8)';
             imageDiv.innerHTML = `
                 <strong>Image ${image.id}</strong><br>
                 Data: [${image.data.map(d => d.toFixed(2)).join(', ')}]
@@ -80,6 +85,12 @@ function displayRound() {
             
             imageDiv.addEventListener('click', () => selectImage(image.id, imageDiv));
             imagesElement.appendChild(imageDiv);
+            
+            // Stagger animation
+            setTimeout(() => {
+                imageDiv.style.opacity = '1';
+                imageDiv.style.transform = 'scale(1)';
+            }, index * 100);
         });
         
         submitButton.disabled = false;
@@ -99,12 +110,16 @@ function selectImage(imageId, imageDiv) {
     
     if (selectedImages.includes(imageId)) {
         selectedImages = selectedImages.filter(id => id !== imageId);
+        imageDiv.style.transition = 'all 0.3s ease';
         imageDiv.style.backgroundColor = '';
         imageDiv.style.borderColor = '#ccc';
+        imageDiv.style.transform = 'scale(1)';
     } else {
         selectedImages.push(imageId);
+        imageDiv.style.transition = 'all 0.3s ease';
         imageDiv.style.backgroundColor = '#e3f2fd';
         imageDiv.style.borderColor = '#2196f3';
+        imageDiv.style.transform = 'scale(1.05)';
     }
     
     updateSelections();
@@ -138,34 +153,64 @@ function checkAnswer() {
     const isCorrect = allSameGroup && selectedGroups[0] === correctGroup;
     
     if (isCorrect) {
-        outputElement.textContent = `Correct! You found the pattern. Images ${selectedImages.join(', ')} belong to the same group.`;
-        outputElement.style.color = 'green';
+        outputElement.style.transition = 'all 0.4s ease';
+        outputElement.textContent = `✓ Correct! You found the pattern. Images ${selectedImages.join(', ')} belong to the same group.`;
+        outputElement.style.color = '#27ae60';
+        outputElement.style.opacity = '1';
+        outputElement.style.transform = 'scale(1.05)';
         
-        // Highlight the correct group
-        round.images.forEach(image => {
+        setTimeout(() => {
+            outputElement.style.transform = 'scale(1)';
+        }, 200);
+        
+        // Highlight the correct group with animation
+        round.images.forEach((image, index) => {
             if (image.group === correctGroup) {
-                const imgDiv = document.getElementById(`image-${image.id}`);
-                imgDiv.style.backgroundColor = '#c8e6c9';
-                imgDiv.style.borderColor = '#4caf50';
+                setTimeout(() => {
+                    const imgDiv = document.getElementById(`image-${image.id}`);
+                    imgDiv.style.transition = 'all 0.5s ease';
+                    imgDiv.style.backgroundColor = '#c8e6c9';
+                    imgDiv.style.borderColor = '#4caf50';
+                    imgDiv.style.transform = 'scale(1.1)';
+                    setTimeout(() => {
+                        imgDiv.style.transform = 'scale(1)';
+                    }, 300);
+                }, index * 100);
             }
         });
         
         submitButton.disabled = true;
+        submitButton.style.transition = 'opacity 0.3s ease';
+        submitButton.style.opacity = '0.5';
         
         setTimeout(() => {
             currentRound++;
             displayRound();
         }, 3000);
     } else {
+        outputElement.style.transition = 'all 0.4s ease';
         if (!allSameGroup) {
             outputElement.textContent = `Not quite. The selected images don't all belong to the same group. Hint: ${round.hint}`;
         } else {
             outputElement.textContent = `Close, but not the right group. Hint: ${round.hint}`;
         }
-        outputElement.style.color = 'red';
+        outputElement.style.color = '#e74c3c';
+        outputElement.style.opacity = '1';
+        outputElement.style.animation = 'shake 0.5s ease';
     }
 }
 
 submitButton.addEventListener('click', checkAnswer);
+
+// Add shake animation for incorrect answers
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-10px); }
+        75% { transform: translateX(10px); }
+    }
+`;
+document.head.appendChild(style);
 
 displayRound();
