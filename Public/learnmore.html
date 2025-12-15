@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Learn More</title>
+    <title>How AI Works - Interactive Deep Dive</title>
+    <link rel="stylesheet" href="/styles/learnmore.css">
     <link rel="stylesheet" href="/styles/main.css">
 </head>
 <body>
@@ -18,26 +19,393 @@
             </ul>
         </div>
     </nav>
-    <script>
-        const menuIcon = document.querySelector('.menu-icon');
-        const nav = document.querySelector('nav');
+    <div class="container">
+        <header>
+            <h1> How AI Works</h1>
+            <p class="subtitle">An Interactive Deep Dive into Artificial Intelligence</p>
+        </header>
+
+        <div class="content">
+            <section>
+                <h2> The Foundation: Neural Networks</h2>
+                <p>At its core, modern AI is built on <strong>artificial neural networks</strong> that loosely mimic how neurons in the brain work. A neural network consists of layers of interconnected nodes (artificial neurons). Each connection has a weight - just a number that determines how much influence one neuron has on another.</p>
+
+                <div class="interactive-section">
+                    <h3>Interactive Neural Network</h3>
+                    <p>This is a simple 3-layer neural network. Each circle represents a neuron:</p>
+                    <div class="neural-network" id="networkViz">
+                        <div class="layer">
+                            <div class="neuron">I₁</div>
+                            <div class="neuron">I₂</div>
+                            <div class="neuron">I₃</div>
+                        </div>
+                        <div class="layer">
+                            <div class="neuron">H₁</div>
+                            <div class="neuron">H₂</div>
+                            <div class="neuron">H₃</div>
+                            <div class="neuron">H₄</div>
+                        </div>
+                        <div class="layer">
+                            <div class="neuron">O₁</div>
+                            <div class="neuron">O₂</div>
+                        </div>
+                    </div>
+                    <p style="text-align: center; margin-top: 20px;"><strong>Input Layer → Hidden Layer → Output Layer</strong></p>
+                </div>
+
+                <h3>What Each Neuron Does:</h3>
+                <div class="code-block">
+<span class="comment">// Each neuron performs these steps:</span>
+<span class="keyword">function</span> <span class="function">neuron</span>(inputs, weights, bias) {
+    <span class="comment">// 1. Multiply each input by its weight</span>
+    <span class="keyword">let</span> weightedSum = <span class="number">0</span>;
+    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; inputs.length; i++) {
+        weightedSum += inputs[i] * weights[i];
+    }
+    
+    <span class="comment">// 2. Add bias</span>
+    weightedSum += bias;
+    
+    <span class="comment">// 3. Apply activation function (ReLU)</span>
+    <span class="keyword">return</span> <span class="function">Math.max</span>(<span class="number">0</span>, weightedSum);
+}
+                </div>
+
+                <div class="info-box">
+                    <strong>Key Insight:</strong> The activation function introduces non-linearity. Without it, stacking layers would just create a complicated linear function - and linear functions can't learn complex patterns!
+                </div>
+            </section>
+
+            <section>
+                <h2> How Learning Actually Happens</h2>
+                <p>The "magic" of AI is in the training process, which uses <strong>gradient descent</strong> and <strong>backpropagation</strong>. Here's the process:</p>
+
+                <div class="list-item">
+                    <strong>Step 1: Forward Pass</strong> - Input data flows through the network, and it makes a prediction. Initially, with random weights, predictions are terrible.
+                </div>
+
+                <div class="list-item">
+                    <strong>Step 2: Calculate Loss</strong> - A loss function measures how wrong the prediction was. For example, mean squared error for regression, or cross-entropy for classification.
+                </div>
+
+                <div class="list-item">
+                    <strong>Step 3: Backpropagation</strong> - The algorithm calculates the gradient (derivative) of the loss with respect to every single weight. This tells us: "If I slightly increase this weight, does the loss go up or down, and by how much?"
+                </div>
+
+                <div class="list-item">
+                    <strong>Step 4: Update Weights</strong> - Each weight gets nudged in the direction that reduces loss.
+                </div>
+
+                <div class="list-item">
+                    <strong>Step 5: Repeat</strong> - This happens thousands or millions of times on batches of training data until the loss stops decreasing.
+                </div>
+
+                <div class="interactive-section">
+                    <h3>Gradient Descent Visualization</h3>
+                    <p>Watch the ball roll down the gradient to find the minimum (optimal weights):</p>
+                    <div class="gradient-demo">
+                        <div class="ball"></div>
+                    </div>
+                    <p style="text-align: center;"><em>The ball represents weights being optimized to minimize loss</em></p>
+                </div>
+
+                <div class="code-block">
+<span class="comment">// Weight update formula</span>
+<span class="keyword">function</span> <span class="function">updateWeight</span>(weight, gradient, learningRate) {
+    <span class="keyword">return</span> weight - (learningRate * gradient);
+}
+
+<span class="comment">// Example training loop</span>
+<span class="keyword">for</span> (<span class="keyword">let</span> epoch = <span class="number">0</span>; epoch &lt; <span class="number">1000</span>; epoch++) {
+    <span class="comment">// Forward pass</span>
+    <span class="keyword">let</span> prediction = <span class="function">forwardPass</span>(input, weights);
+    
+    <span class="comment">// Calculate loss</span>
+    <span class="keyword">let</span> loss = <span class="function">calculateLoss</span>(prediction, target);
+    
+    <span class="comment">// Backpropagation</span>
+    <span class="keyword">let</span> gradients = <span class="function">backpropagate</span>(loss);
+    
+    <span class="comment">// Update all weights</span>
+    weights = <span class="function">updateWeights</span>(weights, gradients, <span class="number">0.01</span>);
+}
+                </div>
+
+                <div class="training-simulator">
+                    <h3>Training Simulator</h3>
+                    <p>Click to simulate training epochs:</p>
+                    <button class="button" onclick="simulateTraining()">Start Training</button>
+                    <button class="button" onclick="resetTraining()">Reset</button>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="trainingProgress">0%</div>
+                    </div>
+                    <div class="stats">
+                        <div class="stat-card">
+                            <div>Epoch</div>
+                            <div class="stat-value" id="epochCount">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div>Loss</div>
+                            <div class="stat-value" id="lossValue">1.00</div>
+                        </div>
+                        <div class="stat-card">
+                            <div>Accuracy</div>
+                            <div class="stat-value" id="accuracyValue">0%</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>Deep Learning Architecture Types</h2>
+
+                <h3>Convolutional Neural Networks (CNNs)</h3>
+                <p>Used for images and spatial data. They use convolutional layers that apply learned filters across the input, detecting features like edges, textures, and eventually complex objects.</p>
+
+                <div class="code-block">
+<span class="comment">// Simplified convolution operation</span>
+<span class="keyword">function</span> <span class="function">convolve</span>(image, filter) {
+    <span class="keyword">let</span> output = [];
+    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; image.length - filter.length; i++) {
+        <span class="keyword">let</span> sum = <span class="number">0</span>;
+        <span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">0</span>; j &lt; filter.length; j++) {
+            sum += image[i + j] * filter[j];
+        }
+        output.push(sum);
+    }
+    <span class="keyword">return</span> output;
+}
+                </div>
+
+                <h3>Recurrent Neural Networks (RNNs) & LSTMs</h3>
+                <p>Process sequences by maintaining hidden state that persists across time steps. LSTMs add "gates" that control information flow, solving the vanishing gradient problem.</p>
+
+                <h3>Transformers</h3>
+                <p>The architecture behind modern large language models. The breakthrough is the <strong>attention mechanism</strong>, which lets the model weigh the importance of different parts of the input when processing each element.</p>
+            </section>
+
+            <section>
+                <h2> How Transformers Work</h2>
+                <p>Since transformers power most cutting-edge AI, let's go deeper into the attention mechanism:</p>
+
+                <div class="interactive-section">
+                    <h3>Self-Attention Visualization</h3>
+                    <p>For each word (token), the model computes attention scores with every other word. Hover over the tokens below:</p>
+                    <div class="attention-viz">
+                        <div class="token" data-token="The">The</div>
+                        <div class="token" data-token="cat">cat</div>
+                        <div class="token" data-token="sat">sat</div>
+                        <div class="token" data-token="on">on</div>
+                        <div class="token" data-token="the">the</div>
+                        <div class="token" data-token="mat">mat</div>
+                    </div>
+                    <p style="margin-top: 20px;"><em>Each token attends to other tokens to understand context</em></p>
+                </div>
+
+                <div class="code-block">
+<span class="comment">// Simplified attention mechanism</span>
+<span class="keyword">function</span> <span class="function">attention</span>(query, keys, values) {
+    <span class="comment">// Calculate attention scores</span>
+    <span class="keyword">let</span> scores = keys.<span class="function">map</span>(key => 
+        <span class="function">dotProduct</span>(query, key) / <span class="function">Math.sqrt</span>(key.length)
+    );
+    
+    <span class="comment">// Apply softmax to get probabilities</span>
+    <span class="keyword">let</span> weights = <span class="function">softmax</span>(scores);
+    
+    <span class="comment">// Weighted sum of values</span>
+    <span class="keyword">let</span> output = <span class="function">weightedSum</span>(values, weights);
+    <span class="keyword">return</span> output;
+}
+
+<span class="comment">// Mathematical formula: Attention(Q,K,V) = softmax(QK^T / √d_k)V</span>
+                </div>
+
+                <div class="info-box">
+                    <strong>Multi-head Attention:</strong> Run multiple attention mechanisms in parallel with different learned transformations, letting the model attend to information from different representation subspaces.
+                </div>
+            </section>
+
+            <section>
+                <h2> Training Large Language Models</h2>
+                <p>Training something like modern AI assistants involves massive scale:</p>
+
+                <div class="stats">
+                    <div class="stat-card">
+                        <div>Parameters</div>
+                        <div class="stat-value">100B+</div>
+                        <div>Billions of learnable weights</div>
+                    </div>
+                    <div class="stat-card">
+                        <div>Training Data</div>
+                        <div class="stat-value">1T+</div>
+                        <div>Trillions of tokens</div>
+                    </div>
+                    <div class="stat-card">
+                        <div>Compute</div>
+        <div class="stat-value">1000s</div>
+                        <div>GPUs/TPUs in parallel</div>
+                    </div>
+                </div>
+
+                <h3>The Training Process:</h3>
+
+                <div class="list-item">
+                    <strong>Tokenization:</strong> Text is broken into subword units. "understanding" → ["under", "stand", "ing"]
+                </div>
+
+                <div class="list-item">
+                    <strong>Next-Token Prediction:</strong> The model learns to predict the next token given all previous tokens
+                </div>
+
+                <div class="list-item">
+                    <strong>Scale:</strong> Training uses data parallelism, model parallelism, and mixed precision training
+                </div>
+
+                <div class="code-block">
+<span class="comment">// Next-token prediction training</span>
+<span class="keyword">function</span> <span class="function">trainLanguageModel</span>(text) {
+    <span class="keyword">let</span> tokens = <span class="function">tokenize</span>(text);
+    
+    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; tokens.length - <span class="number">1</span>; i++) {
+        <span class="comment">// Context: all tokens up to position i</span>
+        <span class="keyword">let</span> context = tokens.<span class="function">slice</span>(<span class="number">0</span>, i + <span class="number">1</span>);
         
-        menuIcon?.addEventListener('click', function() {
-            nav.classList.toggle('active');
-        });
+        <span class="comment">// Target: next token</span>
+        <span class="keyword">let</span> target = tokens[i + <span class="number">1</span>];
         
-        document.addEventListener('click', function(event) {
-            if (nav.classList.contains('active') && 
-                !nav.contains(event.target) && 
-                !menuIcon.contains(event.target)) {
-                nav.classList.remove('active');
-            }
-        });
-    </script>
-    <main>
-    <p>This website is a game-style story that teaches you how AI learns by putting you in the same situations that AI models face.</p>
-    <p>Don't worry you don't need to have any prior knowledge of AI to play this game.</p>
-    <a href="/index.html">Back to Home</a>
-    </main>
+        <span class="comment">// Predict and calculate loss</span>
+        <span class="keyword">let</span> prediction = <span class="function">model</span>(context);
+        <span class="keyword">let</span> loss = <span class="function">crossEntropy</span>(prediction, target);
+        
+        <span class="comment">// Update model weights</span>
+        <span class="function">backpropagate</span>(loss);
+    }
+}
+                </div>
+            </section>
+
+            <section>
+                <h2> Fine-tuning and Alignment</h2>
+                <p>After initial training, models undergo additional training to align with human values:</p>
+
+                <h3>Reinforcement Learning from Human Feedback (RLHF)</h3>
+                <div class="list-item">
+                    <strong>Step 1:</strong> Generate multiple responses to prompts
+                </div>
+                <div class="list-item">
+                    <strong>Step 2:</strong> Humans rank them by quality
+                </div>
+                <div class="list-item">
+                    <strong>Step 3:</strong> Train a reward model to predict human preferences
+                </div>
+                <div class="list-item">
+                    <strong>Step 4:</strong> Use reinforcement learning to optimize the model to maximize predicted rewards
+                </div>
+
+                <div class="info-box">
+                    <strong>Result:</strong> This aligns the model with human values and makes it more helpful, harmless, and honest.
+                </div>
+            </section>
+
+            <section>
+                <h2>⚡ Inference (Using the Trained Model)</h2>
+                <p>When you interact with an AI model, here's what happens:</p>
+
+                <div class="code-block">
+<span class="comment">// Inference process</span>
+<span class="keyword">function</span> <span class="function">generateResponse</span>(userMessage, temperature = <span class="number">0.7</span>) {
+    <span class="comment">// 1. Tokenize input</span>
+    <span class="keyword">let</span> tokens = <span class="function">tokenize</span>(userMessage);
+    
+    <span class="comment">// 2. Convert to embeddings</span>
+    <span class="keyword">let</span> embeddings = <span class="function">embed</span>(tokens);
+    
+    <span class="comment">// 3. Process through transformer layers</span>
+    <span class="keyword">let</span> output = <span class="function">transformer</span>(embeddings);
+    
+    <span class="comment">// 4. Generate tokens one at a time</span>
+    <span class="keyword">let</span> response = [];
+    <span class="keyword">let</span> currentToken = <span class="keyword">null</span>;
+    <span class="keyword">let</span> maxTokens = <span class="number">100</span>; <span class="comment">// Safety limit</span>
+    
+    <span class="keyword">while</span> (response.length &lt; maxTokens) {
+        <span class="comment">// Get probability distribution over vocabulary</span>
+        <span class="keyword">let</span> probs = <span class="function">softmax</span>(output);
+        
+        <span class="comment">// Sample next token (with temperature)</span>
+        currentToken = <span class="function">sample</span>(probs, temperature);
+        
+        <span class="comment">// Check if we hit end token</span>
+        <span class="keyword">if</span> (<span class="function">isEndToken</span>(currentToken)) {
+            <span class="keyword">break</span>;
+        }
+        
+        response.<span class="function">push</span>(currentToken);
+        
+        <span class="comment">// Add to context and continue</span>
+        output = <span class="function">transformer</span>([...embeddings, ...response]);
+    }
+    
+    <span class="keyword">return</span> <span class="function">detokenize</span>(response);
+}
+                </div>
+
+                <div class="info-box">
+                    <strong>Key Insight:</strong> Even at inference, the model predicts tokens one at a time. It doesn't "think" ahead and then write - each word influences what comes next.
+                </div>
+            </section>
+
+            <section>
+                <h2> Emergent Abilities</h2>
+                <p>Fascinating phenomena emerge at scale:</p>
+
+                <div class="stats">
+                    <div class="stat-card">
+                        <div>📚</div>
+                        <div style="font-size: 1.2em; margin-top: 10px;">Few-Shot Learning</div>
+                        <div style="font-size: 0.9em;">Understanding tasks from examples</div>
+                    </div>
+                    <div class="stat-card">
+                        <div>🔗</div>
+                        <div style="font-size: 1.2em; margin-top: 10px;">Chain-of-Thought</div>
+                        <div style="font-size: 0.9em;">Breaking problems into steps</div>
+                    </div>
+                    <div class="stat-card">
+                        <div>🔄</div>
+                        <div style="font-size: 1.2em; margin-top: 10px;">Transfer Learning</div>
+                        <div style="font-size: 0.9em;">Applying knowledge to new tasks</div>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2> Limitations</h2>
+                <p>Despite impressive capabilities, fundamental limitations remain:</p>
+
+                <div class="list-item">
+                    ❌ No true understanding of the physical world
+                </div>
+                <div class="list-item">
+                    ❌ Pattern matching, not reasoning in the human sense
+                </div>
+                <div class="list-item">
+                    ❌ Can confidently generate plausible but false information
+                </div>
+                <div class="list-item">
+                    ❌ No memory between conversations (without explicit context)
+                </div>
+                <div class="list-item">
+                    ❌ Training data cutoff means outdated information
+                </div>
+            </section>
+
+            <section style="margin-top: 60px; padding-top: 40px; border-top: 2px solid #e0e0e0;">
+                <h2 style="text-align: center; color: #3498db;">The Future of AI</h2>
+                <p style="text-align: center; font-size: 1.1em;">The field is rapidly evolving with techniques like retrieval-augmented generation, multimodal learning (combining vision/text), and more efficient architectures. The core principle remains: <strong>learn patterns from data through gradient descent on massive neural networks.</strong></p>
+            </section>
+        </div>
+    </div>
+    <script src="/styles/learnmore.js"></script>
 </body>
-</html>
+</html> 
