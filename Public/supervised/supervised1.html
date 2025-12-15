@@ -7,6 +7,33 @@
     <link rel="stylesheet" href="/styles/main.css">
 </head>
 <body>
+    <button class="menu-icon" aria-label="Toggle navigation">☰</button>
+    <nav>
+        <div class="nav-container">
+            <a href="/" class="nav-brand">Learn Like An AI</a>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/start.html">Start</a></li>
+                <li><a href="/learnmore.html">Learn More</a></li>
+            </ul>
+        </div>
+    </nav>
+    <script>
+        const menuIcon = document.querySelector('.menu-icon');
+        const nav = document.querySelector('nav');
+        
+        menuIcon?.addEventListener('click', function() {
+            nav.classList.toggle('active');
+        });
+        
+        document.addEventListener('click', function(event) {
+            if (nav.classList.contains('active') && 
+                !nav.contains(event.target) && 
+                !menuIcon.contains(event.target)) {
+                nav.classList.remove('active');
+            }
+        });
+    </script>
     <main>
     <h1>Supervised Learning</h1>
     <p>The AI guesses a prediction, compares it to the correct answer, sees how “wrong” it was, and adjusts itself so next time it’s a little less wrong. Do this millions of times → the AI gets good.</p>

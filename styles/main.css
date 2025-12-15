@@ -15,6 +15,148 @@ body {
     animation: fadeIn 0.5s ease-in;
 }
 
+/* Navigation Bar */
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    background-color: black;
+    padding: 15px 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    z-index: 1000;
+    transform: translateY(-100%);
+    transition: transform 0.3s ease;
+}
+
+nav.active {
+    transform: translateY(0);
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+nav .nav-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.menu-icon {
+    position: fixed;
+    top: 7px;
+    left: 0px;
+    background: rgb(0, 0, 0);
+    border: none;
+    color: white;
+    font-size: 28px;
+    cursor: pointer;
+    padding: 10px 15px;
+    z-index: 1001;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.menu-icon:hover {
+    color: #ffd700;
+    background-color: #333;
+    transform: scale(1.1);
+}
+
+nav .nav-toggle {
+    display: none;
+}
+
+nav .nav-brand {
+    left: 50px;
+    color: white;
+    font-size: 15spx;
+    font-weight: bold;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+nav .nav-brand:hover {
+    color: #ffd700;
+    transform: scale(1.05);
+    text-shadow: 0 2px 8px rgba(255, 215, 0, 0.4);
+}
+
+nav .nav-links {
+    display: flex;
+    gap: 15px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+@media (max-width: 768px) {
+    nav .nav-links {
+        flex-direction: column;
+        gap: 0;
+    }
+    
+    nav .nav-links li {
+        width: 100%;
+    }
+    
+    nav .nav-links a {
+        display: block;
+        width: 100%;
+        padding: 12px 20px;
+        border-radius: 0;
+        border: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    nav .nav-links a:hover {
+        background-color: rgba(255, 255, 255, 0.15);
+        transform: none;
+    }
+}
+
+nav .nav-links li {
+    margin: 0;
+    padding: 0;
+}
+
+nav .nav-links a {
+    color: white;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    background-color: rgba(255, 255, 255, 0.1);
+    margin: 0;
+    display: inline-block;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+nav .nav-links a:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;

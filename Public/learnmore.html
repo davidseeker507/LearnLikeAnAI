@@ -7,6 +7,33 @@
     <link rel="stylesheet" href="/styles/main.css">
 </head>
 <body>
+    <button class="menu-icon" aria-label="Toggle navigation">☰</button>
+    <nav>
+        <div class="nav-container">
+            <a href="/" class="nav-brand">Learn Like An AI</a>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/Public/start.html">Start</a></li>
+                <li><a href="/Public/learnmore.html" class="active">Learn More</a></li>
+            </ul>
+        </div>
+    </nav>
+    <script>
+        const menuIcon = document.querySelector('.menu-icon');
+        const nav = document.querySelector('nav');
+        
+        menuIcon?.addEventListener('click', function() {
+            nav.classList.toggle('active');
+        });
+        
+        document.addEventListener('click', function(event) {
+            if (nav.classList.contains('active') && 
+                !nav.contains(event.target) && 
+                !menuIcon.contains(event.target)) {
+                nav.classList.remove('active');
+            }
+        });
+    </script>
     <main>
     <p>This website is a game-style story that teaches you how AI learns by putting you in the same situations that AI models face.</p>
     <p>Don't worry you don't need to have any prior knowledge of AI to play this game.</p>

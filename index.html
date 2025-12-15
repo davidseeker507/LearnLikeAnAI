@@ -7,11 +7,39 @@
     <link rel="stylesheet" href="/styles/main.css">
 </head>
 <body>
+    <button class="menu-icon" aria-label="Toggle navigation">☰</button>
+    <nav>
+        <div class="nav-container">
+            <a href="/" class="nav-brand">Learn Like An AI</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="Public/start.html">Start</a></li>
+                <li><a href="Public/learnmore.html">Learn More</a></li>
+            </ul>
+        </div>
+    </nav>
+    <script>
+        const menuIcon = document.querySelector('.menu-icon');
+        const nav = document.querySelector('nav');
+        
+        menuIcon?.addEventListener('click', function() {
+            nav.classList.toggle('active');
+        });
+        
+        // Close nav when clicking outside
+        document.addEventListener('click', function(event) {
+            if (nav.classList.contains('active') && 
+                !nav.contains(event.target) && 
+                !menuIcon.contains(event.target)) {
+                nav.classList.remove('active');
+            }
+        });
+    </script>
     <main class="main">
         <h1 >Learn Like An AI</h1>
         <p>This is a Story Game website that helps you understand AI by learning like it, pretty cool right?</p>
-        <a href="/start.html">Start</a>
-        <a href="/learnmore.html">Learn More</a>
+        <a href="/Public/start.html">Start</a>
+        <a href="Public/learnmore.html">Learn More</a>
     </main>
 </body>
-</html>
+</html>   
