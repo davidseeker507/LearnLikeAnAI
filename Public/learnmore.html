@@ -102,11 +102,19 @@
 
                 <div class="interactive-section">
                     <h3>Gradient Descent Visualization</h3>
-                    <p>Watch the ball roll down the gradient to find the minimum (optimal weights):</p>
+                    <p><strong>What is Gradient Descent?</strong> Imagine you're blindfolded on a hill and need to find the bottom (the lowest point). You can't see where you're going, but you can feel which direction is steepest downhill. You take small steps in that direction, and eventually you'll reach the bottom.</p>
+                    
+                    <p>In AI training, the "hill" is the loss function - a curve that shows how wrong the model's predictions are. The "bottom" is where predictions are most accurate. The gradient tells us which direction is steepest (where loss decreases fastest). We adjust the weights (the model's parameters) in that direction, taking small steps called the "learning rate."</p>
+                    
+                    <div class="info-box">
+                        <strong>Key Concept:</strong> The gradient is like a compass pointing downhill. We follow it step by step until we reach the minimum loss (best accuracy).
+                    </div>
+                    
+                    <p>Watch the ball roll down the gradient - it represents the weights moving toward the optimal values:</p>
                     <div class="gradient-demo">
                         <div class="ball"></div>
                     </div>
-                    <p style="text-align: center;"><em>The ball represents weights being optimized to minimize loss</em></p>
+                    <p style="text-align: center; margin-top: 15px;"><em>The ball = current weights | The gradient = direction to improve | The goal = reach the bottom (minimum loss)</em></p>
                 </div>
 
                 <div class="code-block">
@@ -133,6 +141,7 @@
 
                 <div class="training-simulator">
                     <h3>Training Simulator</h3>
+                    <p><strong>What is an Epoch?</strong> An epoch is one complete pass through the entire training dataset. Think of it like reading a textbook once from cover to cover. The model sees every example in the training data exactly once per epoch. Training typically requires many epochs (hundreds or thousands) for the model to learn patterns effectively.</p>
                     <p>Click to simulate training epochs:</p>
                     <button class="button" onclick="simulateTraining()">Start Training</button>
                     <button class="button" onclick="resetTraining()">Reset</button>
@@ -362,17 +371,17 @@
 
                 <div class="stats">
                     <div class="stat-card">
-                        <div>📚</div>
+                        <div></div>
                         <div style="font-size: 1.2em; margin-top: 10px;">Few-Shot Learning</div>
                         <div style="font-size: 0.9em;">Understanding tasks from examples</div>
                     </div>
                     <div class="stat-card">
-                        <div>🔗</div>
+                        <div></div>
                         <div style="font-size: 1.2em; margin-top: 10px;">Chain-of-Thought</div>
                         <div style="font-size: 0.9em;">Breaking problems into steps</div>
                     </div>
                     <div class="stat-card">
-                        <div>🔄</div>
+                        <div></div>
                         <div style="font-size: 1.2em; margin-top: 10px;">Transfer Learning</div>
                         <div style="font-size: 0.9em;">Applying knowledge to new tasks</div>
                     </div>
