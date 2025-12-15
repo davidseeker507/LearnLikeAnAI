@@ -86,17 +86,30 @@ nav .nav-toggle {
 nav .nav-brand {
     left: 50px;
     color: white;
-    font-size: 15spx;
+    font-size: 15px;
     font-weight: bold;
     text-decoration: none;
     transition: all 0.3s ease;
     text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+nav .nav-brand img {
+    height: 28px;
+    width: 28px;
+    display: block;
 }
 
 nav .nav-brand:hover {
     color: #ffd700;
     transform: scale(1.05);
     text-shadow: 0 2px 8px rgba(255, 215, 0, 0.4);
+}
+
+nav .nav-brand:hover img {
+    filter: brightness(0) saturate(100%) invert(77%) sepia(100%) saturate(1000%) hue-rotate(0deg);
 }
 
 nav .nav-links {

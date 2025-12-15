@@ -1,0 +1,14 @@
+<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+  <!-- Simplified neural network icon -->
+  <circle cx="10" cy="20" r="4" fill="currentColor"/>
+  <circle cx="20" cy="12" r="3.5" fill="currentColor"/>
+  <circle cx="20" cy="28" r="3.5" fill="currentColor"/>
+  <circle cx="30" cy="20" r="4" fill="currentColor"/>
+  
+  <!-- Connections -->
+  <line x1="14" y1="20" x2="16.5" y2="12" stroke="currentColor" stroke-width="1.5" opacity="0.7"/>
+  <line x1="14" y1="20" x2="16.5" y2="28" stroke="currentColor" stroke-width="1.5" opacity="0.7"/>
+  <line x1="23.5" y1="12" x2="26" y2="20" stroke="currentColor" stroke-width="1.5" opacity="0.7"/>
+  <line x1="23.5" y1="28" x2="26" y2="20" stroke="currentColor" stroke-width="1.5" opacity="0.7"/>
+</svg>
+
