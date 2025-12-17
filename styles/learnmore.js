@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function() {
             setTimeout(() => {
                 this.style.animation = 'pulse 2s ease-in-out infinite';
             }, 10);
-        });
+        });    
     });
 });
 
@@ -86,3 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+
+
+

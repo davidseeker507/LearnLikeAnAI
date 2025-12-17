@@ -174,12 +174,12 @@ position: absolute;
 top: 80px;
 left: 20px;
 box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-animation: roll 5s ease-in-out infinite;
+animation: roll 4s ease-out infinite;
 }
 
 @keyframes roll {
-0%, 100% { left: 20px; }
-50% { left: calc(100% - 60px); }
+0% { left: 20px; }
+100% { left: calc(100% - 60px); }
 }
 
 .info-box {
