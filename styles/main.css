@@ -180,11 +180,27 @@ nav .nav-links a:hover {
 }
 
 main {
-    background-color: white;
+    background-color: #e8e8e8;
     padding: 30px;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: none;
     animation: slideUp 0.6s ease-out;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 100px);
+    margin-top: 60px;
+}
+
+main.main {
+    max-width: 500px;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 60px;
+    padding: 40px;
 }
 
 @keyframes slideUp {
@@ -200,8 +216,31 @@ main {
 
 h1 {
     color: #2c3e50;
-    margin-top: 0;
+    margin-top: 20px;
+    margin-bottom: 20px;
     animation: fadeInDown 0.8s ease-out;
+}
+
+.logo-container {
+    margin-bottom: 20px;
+    animation: fadeIn 0.8s ease-in;
+}
+
+.main-logo {
+    width: 80px;
+    height: 80px;
+    display: block;
+    margin: 0 auto;
+    object-fit: contain;
+    aspect-ratio: 1 / 1;
+}
+
+.button-container {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 30px;
 }
 
 @keyframes fadeInDown {
@@ -222,6 +261,12 @@ h2 {
 
 p {
     margin: 10px 0;
+    max-width: 500px;
+}
+
+main.main p {
+    margin: 10px auto;
+    text-align: center;
 }
 
 ul, ol {
