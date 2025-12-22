@@ -67,6 +67,7 @@ function checkanswer() {
     const value = userGuess.value;  // Get the actual value (string)
     const numValue = parseInt(value);  // Convert to number if needed
     const correctAnswer = questions[currentQuestionIndex].answer;
+    const incorrectHint = questions[currentQuestionIndex].hint
     
     // Animate button click
     submitButton.style.transform = 'scale(0.95)';
@@ -90,9 +91,10 @@ function checkanswer() {
             displayQuestion()
         }, 1000);
     } else {
+        const hint = questions.hint
         outputElement.style.transition = 'all 0.3s ease';
         outputElement.style.color = '#e74c3c';
-        outputElement.textContent = `Incorrect, The answer is ${correctAnswer}, don't think that it's that easy`;
+        outputElement.textContent = `Incorrect, The answer is ${correctAnswer}, ${incorrectHint} `;
         outputElement.style.opacity = '1';
         outputElement.style.animation = 'shake 0.5s ease';
     }
@@ -113,8 +115,6 @@ style.textContent = `
 document.head.appendChild(style);
 
 displayQuestion();
-
-
 
 
 

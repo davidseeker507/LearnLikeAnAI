@@ -40,14 +40,29 @@
     </script>
     <main>
     <h1>Supervised Learning</h1>
-    <p>The AI guesses a prediction, compares it to the correct answer, sees how “wrong” it was, and adjusts itself so next time it’s a little less wrong. Do this millions of times → the AI gets good.</p>
-    <p>🔁 The 4-step loop every supervised model follows</p>
-    <p>1. Show the AI an input. Example: Input: "What is 2 + 2?"</p>
-    <p>2. The AI makes a guess. Example: Guess: "5"</p>
-    <p>3. The AI compares the guess to the correct answer. Example: Correct answer: "4"</p>
-    <p>4. The AI adjusts itself so next time it's a little less wrong. Example: Adjusted guess: "4.5"</p>
-    <p>Now let's play a game</p>
-    <a href="supervised2.html">Next</a>
+    <p>
+        Now let's choose which type of Supervised learning model
+    </p>
+    <p>
+        Learn more by pressing the button on the bottom left
+    </p>
+    <strong><p>Classification picks a category. Regression predicts a value on a continuum.</p></strong>
+    <div>
+        <details>
+            <summary><a href="regressionSupervised2.html">Regression</a></summary>
+            <p><strong>Predicts:</strong> Continuous numbers (prices, temperatures, ages)</p>
+            <p><strong>How:</strong> Learns a mathematical function mapping inputs to outputs. For example, learns that price = 200 × square_feet + 50,000 × bedrooms.</p>
+            <p><strong>Output:</strong> A single number ($450,000, 72.5°F)</p>
+        </details>
+    </div>
+    <div>
+        <details>
+            <summary><a href="ClassificationSupervised.html">Classification</a></summary>
+            <p><strong>Predicts:</strong> Categories (spam/not spam, cat/dog/bird)</p>
+            <p><strong>How:</strong> Learns boundaries that separate classes. For example, draws a line separating spam from legitimate emails based on features like word choice and punctuation.</p>
+            <p><strong>Output:</strong> A category label, often with probabilities (85% cat, 15% dog)</p>
+        </details>
+    </div>
     </main>
 </body>
 </html>
