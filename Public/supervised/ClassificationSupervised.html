@@ -3,9 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Classification - Learn Like AI</title>
+    <link rel="icon" type="image/svg+xml" href="/styles/logo.svg">
+    <link rel="stylesheet" href="/styles/main.css">
 </head>
 <body>
-    Need to work on this page
+    <button class="menu-icon" aria-label="Toggle navigation">☰</button>
+    <nav>
+        <div class="nav-container">
+            <a href="/" class="nav-brand">
+                <img src="/styles/logo.svg" alt="AI Logo">
+                Learn Like An AI
+            </a>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/Public/start.html">Start</a></li>
+                <li><a href="/Public/learnmore.html">Learn More</a></li>
+            </ul>
+        </div>
+    </nav>
+    <script>
+        const menuIcon = document.querySelector('.menu-icon');
+        const nav = document.querySelector('nav');
+        
+        menuIcon?.addEventListener('click', function() {
+            nav.classList.toggle('active');
+        });
+        
+        document.addEventListener('click', function(event) {
+            if (nav.classList.contains('active') && 
+                !nav.contains(event.target) && 
+                !menuIcon.contains(event.target)) {
+                nav.classList.remove('active');
+            }
+        });
+    </script>
+    <main>
+        <h1>Classification: Learning from Raw Data</h1>
+        <p>You are an AI. You receive numbers. Classify each number as <strong>Category A</strong> or <strong>Category B</strong>.</p>
+        <p id="instruction">Look for patterns. You'll learn from feedback.</p>
+        
+        <div id="data-container">
+            <h2 id="data-display" style="font-size: 2em; margin: 20px 0;"></h2>
+        </div>
+        
+        <div id="classification-buttons">
+            <button id="category-a-btn" class="classify-btn">Category A</button>
+            <button id="category-b-btn" class="classify-btn">Category B</button>
+        </div>
+        
+        <div id="feedback"></div>
+        <div id="pattern-hint" style="margin-top: 20px; font-style: italic; color: #666;"></div>
+        <p id="score">Correct: 0 | Total: 0</p>
+        <a href="supervised3.html" id="nextBtn" style="display:none; pointer-events: none; opacity: 0.5;">Next</a>
+    </main>
+    <script src="/styles/supervisedClassification.js"></script>
 </body>
 </html>
