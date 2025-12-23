@@ -42,7 +42,7 @@ function displayQuestion(){
     else {
         questionElement.style.transition = 'all 0.5s ease';
         questionElement.textContent = "Congratulations! You completed all questions!";
-        outputElement.innerHTML = "<p><strong>The Pattern:</strong> The answer was always the sum of all digits in the question, not the mathematical result!</p><p>Example: 'What is 12 + 34?' → Answer is 1+2+3+4 = 10 (not 46)</p><p>You learned this pattern by comparing your answers to the correct ones, just like supervised AI learns from labeled examples!</p>";
+        outputElement.innerHTML = "<p><strong>The Pattern:</strong> The answer was always the sum of all digits in the question, not the mathematical result!</p><p>Example: 'What is 12 + 34?' → Answer is 1+2+3+4 = 10 (not 46)</p><p>You learned this pattern by comparing your answers to the correct ones, just like supervised AI learns from labeled examples!</p><p>The Games Are Relative To if you were an AI, So if you were really an AI you wouldn't actually understand why 12+34 = 10, You would just know that from past experiences!</p>";
         outputElement.style.opacity = '1';
         outputElement.style.transform = 'translateY(0)';
         
