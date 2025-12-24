@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reinforcement Learning Game</title>
+    <link rel="icon" type="image/svg+xml" href="/styles/logo.svg">
+    <link rel="stylesheet" href="/styles/main.css">
+</head>
+<body>
+    <!-- Navigation same as before -->
+    <main>
+        <h1>Reinforcement Learning: Treasure Hunt</h1>
+        <p>You are an AI learning to find treasure. Move around the grid and learn which paths give rewards!</p>
+        
+        <div id="game-container">
+            <div id="grid"></div>
+        </div>
+        
+        <div id="controls">
+            <button id="up-btn">↑</button>
+            <div>
+                <button id="left-btn">←</button>
+                <button id="right-btn">→</button>
+            </div>
+            <button id="down-btn">↓</button>
+        </div>
+        
+        <div id="score-display">Score: 0</div>
+        <div id="feedback"></div>
+        <div id="episode-count">Episode: 1</div>
+        <button id="reset-btn">Reset Game</button>
+        <a href="reinforcement3.html" id="nextBtn" style="display:none;">Next</a>
+    </main>
+    <script src="/styles/reinforcementGame.js"></script>
+</body>
+</html>

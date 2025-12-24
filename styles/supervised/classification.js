@@ -5,7 +5,6 @@ const feedback = document.getElementById('feedback');
 const patternHint = document.getElementById('pattern-hint');
 const scoreDisplay = document.getElementById('score');
 const nextBtn = document.getElementById('nextBtn');
-
 let currentIndex = 0;
 let correctCount = 0;
 let totalCount = 0;
@@ -42,7 +41,6 @@ const correctNumbers = [
     { value: "66", label: "A" },      // 6+6=12, 12%3=0 → A ✓
     { value: "73", label: "B" }       // 7+3=10, 10%3=1 → B ✓
 ];
-
 function displayNumber() {
     if (currentIndex < correctNumbers.length) {
         dataDisplay.textContent = correctNumbers[currentIndex].value;
