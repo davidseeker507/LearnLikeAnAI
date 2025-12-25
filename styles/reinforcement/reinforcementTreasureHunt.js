@@ -1,5 +1,5 @@
 // ===== STEP 1: SET UP YOUR CONSTANTS AND VARIABLES =====
-for (i = 0; i < 100; i++){
+for (let i = 0; i < 100; i++){
   console.log(i)
 }
 // TODO: Define grid size - how many rows and columns do you want?
@@ -33,6 +33,7 @@ const Pirates =- 50
 // Hint: You need to track: grid array, player position (row and col), score, episode number, gameOver flag
 // Use let for variables that will change
 // Example: let playerRow = 0;
+let playerPoints = 0;
 let playerCol = 0;
 let playerRow = 0;
 
@@ -80,6 +81,10 @@ for (let r = 0; r < rows; r++) {
 // TODO: Mark the starting cell (0, 0) as type 'player'
 // Hint: grid[playerRow][playerCol].type = 'player';
 // Also set its reward to 0 (no reward for starting position)
+grid[playerRow][playerCol].type = 'player'
+playerPoints = 0;
+
+grid[row - 1][col - 1].type = 'treasure'
 
 // TODO: Place treasure at the bottom-right corner
 // Hint: Use rows - 1 and cols - 1 for the last position
@@ -92,7 +97,12 @@ for (let r = 0; r < rows; r++) {
 // Remove all type classes (classList.remove)
 // Add the appropriate class based on cell.type (classList.add)
 // Optionally add emoji or text: if player show '👤', if treasure show '💰'
-
+function updateCellVisual(row, col){
+  var cell = grid[row][col]
+  cellElement = cell.element
+  cell.classList.remove
+  cell.type
+}
 // TODO: Call updateCellVisual for player and treasure positions
 
 // ===== STEP 5: CREATE MOVEMENT FUNCTION =====
