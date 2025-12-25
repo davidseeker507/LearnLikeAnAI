@@ -98,13 +98,18 @@ grid[row - 1][col - 1].type = 'treasure'
 // Add the appropriate class based on cell.type (classList.add)
 // Optionally add emoji or text: if player show '👤', if treasure show '💰'
 function updateCellVisual(row, col){
-  var cell = grid[row][col]
-  cellElement = cell.element
-  cell.classList.remove
-  cell.type
+    const cell = grid[row][col]
+    const el = cell.Element
+    el.classList.remove('player')
+    el.textContent = ''
+    
+    if (cell.type === 'player'){
+      el.classList.add('player');
+      el.textContent = '👤';
+    }
 }
 // TODO: Call updateCellVisual for player and treasure positions
-
+updateCellVisual()
 // ===== STEP 5: CREATE MOVEMENT FUNCTION =====
 // TODO: Create a function called movePlayer that takes a direction parameter
 // Function: movePlayer(direction)
