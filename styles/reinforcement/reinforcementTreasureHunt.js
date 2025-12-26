@@ -1,20 +1,17 @@
 // ===== STEP 1: SET UP YOUR CONSTANTS AND VARIABLES =====
-for (let i = 0; i < 100; i++){
-  console.log(i)
-}
-// TODO: Define grid size - how many rows and columns do you want?
+// line grid size - how many rows and columns do you want?
 // Hint: Use const for values that won't change
 // Example: const rows = 5;
-const rows = 10;
-const cols = 10;
+const row = 10;
+const col = 10;
 
 // TODO: Get references to HTML elements you'll need to update
 // Hint: Use document.getElementById() for each element ID from your HTML
 // You need: grid, score-display, feedback, episode-count, reset-btn, nextBtn
 // Example: const gridEl = document.getElementById('grid');
 let gameContainer = document.getElementById('game-container');
-let gridDisplay = document.getElementsById('grid');
-const scoreDisplay = document.getElementsById('score-display');
+let gridDisplay = document.getElementById('grid');
+const scoreDisplay = document.getElementById('score-display');
 let feedback = document.getElementById('feedback')
 let episodeCount = document.getElementById('episode-count');
 const resetBtn = document.getElementById('reset-btn');
@@ -22,6 +19,8 @@ const downBtn = document.getElementById('down-btn');
 const upBtn = document.getElementById('up-btn');
 const leftBtn = document.getElementById('left-btn');
 const rightBtn = document.getElementById('right-btn');
+const nextBtn = document.getElementById('nextBtn');
+nextBtn.disabled = true;
 // TODO: Define reward values as  constants
 // Hint: Treasure should give positive points, steps should cost something
 // Example: const TREASURE_REWARD = 100;
@@ -34,6 +33,7 @@ const gameOver = false;
 // Hint: You need to track: grid array, player position (row and col), score, episode number, gameOver flag
 // Use let for variables that will change
 // Example: let playerRow = 0;
+let episodeNumber = 1;
 let playerPoints = 0;
 let playerCol = 0;
 let playerRow = 0;
@@ -121,7 +121,6 @@ function movePlayer(direction){
 
   let newRow = playerRow;
   let newCol = playerCol;
-  let direction = '';
   if (direction === 'up'){
     newRow--;
   }
@@ -160,28 +159,30 @@ function handleReward(cell) {
   playerPoints += cell.reward
   updateScore();
 
-
+  if (cell.type === 'treasure'){
+    gameOver = true;
+    feedback.textContent = 'YOU FOUND THE TREASURE';
+  }  else{
+    feedback.textContent = 'Step taken'
+    if (cell.reward > 0) {
+      feedback.style.color = 'green'
+      feedback.textContent = 'Gained'
+    } else{
+      feedback.style.color = 'red'
+      feedback.textContent = 'Gained'
+    }
+  }
+  setTimeout(() =>{feedback.textContent = ''}, 1500);
 }
-
-// TODO: Update the score
-// Hint: score += reward;
-// Then call a function to update the display (you'll create this next)
-
-// TODO: Show feedback message
-// If cell type is 'treasure': show success message and end episode
-// Otherwise: show step taken message
-// Set feedback text and color based on positive/negative reward
-
-// TODO: Clear feedback after a delay (use setTimeout)
-// Hint: setTimeout(() => { feedback.textContent = ''; }, 1500);
 
 // ===== STEP 7: CREATE SCORE UPDATE FUNCTION =====
 // TODO: Create function updateScore()
 // Update the score display text: scoreDisplay.textContent = `Score: ${score}`
-
-// TODO: Add a simple animation
-// Hint: Scale it up slightly, then back down
-// Use style.transform = 'scale(1.2)' then setTimeout to scale back to 1
+function updateScore() {
+  scoreDisplay.textContent = 'Score : ${playerPoints}'
+  scoreDisplay.style.transform = 'scale(1.2)'
+  setTimeout(() => scoreDisplay.style.transform = 'scale(1)',1500)
+}
 
 // ===== STEP 8: CREATE EPISODE END FUNCTION =====
 // TODO: Create function endEpisode()
@@ -189,6 +190,15 @@ function handleReward(cell) {
 // Show completion message in feedback
 // Disable all movement buttons (loop through buttons, set disabled = true)
 // After a delay, show the next button
+function endEpisode(){
+  gameOver = true;
+  feedback.textContent = 'Completed'
+  upBtn.disabled = true;
+  downBtn.disabled = true;
+  leftBtn.disabled = true;
+  rightBtn.disabled = true;
+  setTimeout(() => nextBtn.disabled =false, 3000);
+}
 
 // ===== STEP 9: CREATE RESET FUNCTION =====
 // TODO: Create function resetGame()
@@ -203,19 +213,36 @@ function handleReward(cell) {
 // Re-enable all buttons
 // Hide next button
 // Call updateCellVisual for all changed cells
+function resetsGame(){
+  playerPoints = 0;
+  episodeNumber++;
+  gameOver = false;
+  grid[0][0].type = 'player'
+  upBtn.disabled = false;
+  downBtn.disabled = false;
+  leftBtn.disabled = false;
+  rightBtn.disabled = false;
+  TREASURE = 100;
+  nextBtn.disabled = true;
+  updateCellVisual(0,0);
+}
 
 // ===== STEP 10: ADD EVENT LISTENERS =====
 // TODO: Add click listeners to all direction buttons
-// Hint: document.getElementById('up-btn').addEventListener('click', () => movePlayer('up'))
-// Do this for: up-btn, down-btn, left-btn, right-btn
-
-// TODO: Add click listener to reset button
-// Hint: resetBtn.addEventListener('click', resetGame)
+// Hint: c
+// Do this for: up-btn, down-btn, left-btn, right-btn and also for reset
+document.getElementById('up-btn').addEventListener('click', () => movePlayer('up'));
+document.getElementById('down-btn').addEventListener('click', () => movePlayer('down'));
+document.getElementById('left-btn').addEventListener('click', () => movePlayer('left'));
+document.getElementById('right-btn').addEventListener('click', () => movePlayer('right'));
+document.getElementById('right-btn').addEventListener('click', () => (resetsGame));
 
 // ===== STEP 11: INITIALIZE THE GAME =====
 // TODO: Call updateScore() to set initial score display
 // TODO: Set initial episode count display
 // TODO: Make sure all cells are visually updated
+updateScore();
+episodeCount =  1;
 
 // ===== BONUS CHALLENGES (Once basic game works) =====
 // TODO: Add obstacles that give penalties
