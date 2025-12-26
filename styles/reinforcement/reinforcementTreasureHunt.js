@@ -26,9 +26,9 @@ const rightBtn = document.getElementById('right-btn');
 // Hint: Treasure should give positive points, steps should cost something
 // Example: const TREASURE_REWARD = 100;
 const TREASURE = 100;
-const StepPoints =-1
-const Pirates =- 50
-const gameOver = false
+const StepPoints =-1;
+const Pirates =- 50;
+const gameOver = false;
 
 // TODO: Create game state variables
 // Hint: You need to track: grid array, player position (row and col), score, episode number, gameOver flag
@@ -46,15 +46,15 @@ let playerRow = 0;
 // Example structure: grid = Array.from({ length: rows }, (_, r) => ...)
 // Inside that, create another Array.from for columns
 // Each cell object: { type: 'empty', reward: STEP_COST, row: r, col: c, element: null }
-grid = Array.from({length: rows}, (_,r) => 
-  Array.from({length: cols}), (_,c) =>
-  {
-  type: 'empty'
-  stepCost: -1
-  reward: null;
-  Element: null;
-  }
-)
+const grid = Array.from({length: rows}, (_,r) => 
+  Array.from({length: cols}, (_,c) => ({
+    type: 'empty',
+    stepCost: -1,
+    reward: null,
+    Element: null,
+    
+  }))
+);
 //Array.from makes an array that is the length of rows which is 10, and then it gives each different one the index of r which would just be 0 to 9 saying that the length is 10, so it goes 0, 1, 2, 3, 4, 5, 6, 7, 8, 9. Then an arrow function to declare that from each one's one of those values from this array. Now also add an array with each different value from the array which is length columns, and then also give it a second index of columns. Then another arrow function to give each single one attribute. This creates a grid form which each one having its own corresponding value which is pretty cool.
 // ===== STEP 3: CREATE VISUAL GRID CELLS =====
 // TODO: Loop through your grid array (nested loops: rows, then columns)
@@ -62,7 +62,7 @@ grid = Array.from({length: rows}, (_,r) =>
 for (let r = 0; r < rows; r++) {
   for (let c = 0; c < cols; c++){
     const cell = document.createElement('div');
-    cell.id = 'cell, ${r}, ${c}'
+    cell.id = 'cell, ${r}, ${c}';
 
     document.body.appendChild(cell);
   }
@@ -82,10 +82,10 @@ for (let r = 0; r < rows; r++) {
 // TODO: Mark the starting cell (0, 0) as type 'player'
 // Hint: grid[playerRow][playerCol].type = 'player';
 // Also set its reward to 0 (no reward for starting position)
-grid[playerRow][playerCol].type = 'player'
+grid[playerRow][playerCol].type = 'player';
 playerPoints = 0;
 
-grid[row - 1][col - 1].type = 'treasure'
+grid[row - 1][col - 1].type = 'treasure';
 
 // TODO: Place treasure at the bottom-right corner
 // Hint: Use rows - 1 and cols - 1 for the last position
@@ -99,17 +99,17 @@ grid[row - 1][col - 1].type = 'treasure'
 // Add the appropriate class based on cell.type (classList.add)
 // Optionally add emoji or text: if player show '👤', if treasure show '💰'
 function updateCellVisual(row, col){
-    const cell = grid[row][col]
-    const el = cell.Element
-    el.classList.remove('player')
-    el.textContent = ''
+    const cell = grid[row][col];
+    const el = cell.Element;
+    el.classList.remove('player');
+    el.textContent = '';
     
     if (cell.type === 'player'){
       el.classList.add('player');
       el.textContent = '👤';
     }
 }
-// TODO: Call updateCellVisual for player and treasure positions
+
 updateCellVisual()
 // ===== STEP 5: CREATE MOVEMENT FUNCTION =====
 // TODO: Create a function called movePlayer that takes a direction parameter
@@ -119,9 +119,9 @@ updateCellVisual()
 function movePlayer(direction){
   if (gameOver) return
 
-  let newRow = playerRow
-  let newCol = playerCol
-  let direction = ''
+  let newRow = playerRow;
+  let newCol = playerCol;
+  let direction = '';
   if (direction === 'up'){
     newRow--;
   }
@@ -134,49 +134,34 @@ function movePlayer(direction){
   else if (direction === 'right'){
     newCol++;
   }
+
   if ( 9 >= newRow >= 0 && 9 >= newCol >= 0 ){
-    return
+    return;
   } else{
-    feedback.append('Cannot do action')
-    console.log
+    feedback.append('Cannot do action');
   }
 
-}
+  grid[playerRow][playerCol].type = 'none';
+  grid[playerRow][playerCol].stepCost = -1;
+  updateCellVisual(newRow,newCol);
 
-// TODO: Calculate new position based on direction
-// Hint: Create variables newRow and newCol, start with current playerRow and playerCol
-// Then modify based on direction:
-//   up: newRow--
-//   down: newRow++
-//   left: newCol--
-//   right: newCol++
+  playerRow = newRowl;
+  playerCol = newCol;
 
-// TODO: Check if new position is valid (within grid bounds)
-// Hint: Check if newRow >= 0 && newRow < rows && newCol >= 0 && newCol < cols
-// If not valid, show feedback message and return
-
-// TODO: Get the target cell: grid[newRow][newCol]
-
-// TODO: Remove player from old position
-// Set grid[playerRow][playerCol].type back to 'empty'
-// Set its reward back to STEP_COST
-// Call updateCellVisual for old position
-
-// TODO: Update player position variables
-// Set playerRow = newRow and playerCol = newCol
-
-// TODO: Mark new cell as player
-// Set grid[playerRow][playerCol].type = 'player'
-// Call updateCellVisual for new position
-
-// TODO: Handle the reward/penalty (call a function you'll create next)
+  grid[playerRow][playerCol].type = 'player'
+  handleReward();
+};
 
 // ===== STEP 6: CREATE REWARD HANDLING FUNCTION =====
 // TODO: Create function handleReward(cell)
 // This function receives the cell the player just moved to
+function handleReward(cell) {
+  const reward = cell.reward
+  playerPoints += cell.reward
+  updateScore();
 
-// TODO: Get the reward value from the cell
-// Hint: const reward = cell.reward;
+
+}
 
 // TODO: Update the score
 // Hint: score += reward;
