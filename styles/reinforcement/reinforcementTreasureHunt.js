@@ -28,6 +28,7 @@ const rightBtn = document.getElementById('right-btn');
 const TREASURE = 100;
 const StepPoints =-1
 const Pirates =- 50
+const gameOver = false
 
 // TODO: Create game state variables
 // Hint: You need to track: grid array, player position (row and col), score, episode number, gameOver flag
@@ -115,8 +116,32 @@ updateCellVisual()
 // Function: movePlayer(direction)
 // Directions will be: 'up', 'down', 'left', 'right'
 
-// TODO: Inside movePlayer, check if game is over - if so, return early
-// Hint: if (gameOver) return;
+function movePlayer(direction){
+  if (gameOver) return
+
+  let newRow = playerRow
+  let newCol = playerCol
+  let direction = ''
+  if (direction === 'up'){
+    newRow--;
+  }
+  else if (direction === 'down'){
+    newRow++;
+  }
+  else if (direction === 'left'){
+    newCol--;
+  }
+  else if (direction === 'right'){
+    newCol++;
+  }
+  if ( 9 >= newRow >= 0 && 9 >= newCol >= 0 ){
+    return
+  } else{
+    feedback.append('Cannot do action')
+    console.log
+  }
+
+}
 
 // TODO: Calculate new position based on direction
 // Hint: Create variables newRow and newCol, start with current playerRow and playerCol
