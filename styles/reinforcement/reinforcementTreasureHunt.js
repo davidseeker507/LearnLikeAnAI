@@ -2,8 +2,8 @@
 // line grid size - how many rows and columns do you want?
 // Hint: Use const for values that won't change
 // Example: const rows = 5;
-const row = 10;
-const col = 10;
+const rows = 10;
+const cols = 10;
 
 // TODO: Get references to HTML elements you'll need to update
 // Hint: Use document.getElementById() for each element ID from your HTML
@@ -33,10 +33,11 @@ const gameOver = false;
 // Hint: You need to track: grid array, player position (row and col), score, episode number, gameOver flag
 // Use let for variables that will change
 // Example: let playerRow = 0;
+
 let episodeNumber = 1;
 let playerPoints = 0;
-let playerCol = 0;
-let playerRow = 0;
+let playerCols = 0;
+let playerRows = 0;
 
 // ===== STEP 2: CREATE THE GRID DATA STRUCTURE =====
 // TODO: Initialize your grid as a 2D array
@@ -82,10 +83,10 @@ for (let r = 0; r < rows; r++) {
 // TODO: Mark the starting cell (0, 0) as type 'player'
 // Hint: grid[playerRow][playerCol].type = 'player';
 // Also set its reward to 0 (no reward for starting position)
-grid[playerRow][playerCol].type = 'player';
+grid[playerRows][playerCols].type = 'player';
 playerPoints = 0;
 
-grid[row - 1][col - 1].type = 'treasure';
+grid[rows - 1][cols - 1].type = 'treasure';
 
 // TODO: Place treasure at the bottom-right corner
 // Hint: Use rows - 1 and cols - 1 for the last position
@@ -98,56 +99,60 @@ grid[row - 1][col - 1].type = 'treasure';
 // Remove all type classes (classList.remove)
 // Add the appropriate class based on cell.type (classList.add)
 // Optionally add emoji or text: if player show '👤', if treasure show '💰'
-function updateCellVisual(row, col){
-    const cell = grid[row][col];
-    const el = cell.Element;
-    el.classList.remove('player');
+function updateCellVisual(rows, cols){
+  console.log('updateCellvisual Function');
+    const cell = grid[rows][cols];
+    const el = cell.type;
+    el(classList.remove('player'));
     el.textContent = '';
     
     if (cell.type === 'player'){
-      el.classList.add('player');
+      el(classList.add('player'));
       el.textContent = '👤';
     }
 }
 
-updateCellVisual()
 // ===== STEP 5: CREATE MOVEMENT FUNCTION =====
 // TODO: Create a function called movePlayer that takes a direction parameter
 // Function: movePlayer(direction)
 // Directions will be: 'up', 'down', 'left', 'right'
 
 function movePlayer(direction){
-  if (gameOver) return
-
-  let newRow = playerRow;
-  let newCol = playerCol;
+  console.log('movePlayerFunction');
+  if (gameOver) {
+    return}
+  newRows = playerRows;
+  newCols = playerCols;
   if (direction === 'up'){
-    newRow--;
+    console.log('newRows Value change ,up');
+    newRows--;
   }
   else if (direction === 'down'){
-    newRow++;
+    newRows++;
   }
   else if (direction === 'left'){
-    newCol--;
+    newCols--;
   }
   else if (direction === 'right'){
-    newCol++;
+    newCols++;
   }
-
-  if ( 9 >= newRow >= 0 && 9 >= newCol >= 0 ){
-    return;
+  console.log(newRows);
+  console.log(newCols);
+  if ( 9 >= newRows && newRows >= 0 && 9 >= newCols && newCols >= 0 ){
+    console.log('valid, move');
+    ;
   } else{
     feedback.append('Cannot do action');
   }
 
-  grid[playerRow][playerCol].type = 'none';
-  grid[playerRow][playerCol].stepCost = -1;
-  updateCellVisual(newRow,newCol);
+  grid[playerRows][playerCols].type = 'none';
+  grid[playerRows][playerCols].stepCost = -1;
+  updateCellVisual(newRows,newCols);
 
-  playerRow = newRowl;
-  playerCol = newCol;
+  playerRows = newRows;
+  playerCols = newCols;
 
-  grid[playerRow][playerCol].type = 'player'
+  grid[playerRows][playerCols].type = 'player'
   handleReward();
 };
 
@@ -179,7 +184,7 @@ function handleReward(cell) {
 // TODO: Create function updateScore()
 // Update the score display text: scoreDisplay.textContent = `Score: ${score}`
 function updateScore() {
-  scoreDisplay.textContent = 'Score : ${playerPoints}'
+  scoreDisplay.textContent = `Score : ${playerPoints}`
   scoreDisplay.style.transform = 'scale(1.2)'
   setTimeout(() => scoreDisplay.style.transform = 'scale(1)',1500)
 }
@@ -231,7 +236,7 @@ function resetsGame(){
 // TODO: Add click listeners to all direction buttons
 // Hint: c
 // Do this for: up-btn, down-btn, left-btn, right-btn and also for reset
-document.getElementById('up-btn').addEventListener('click', () => movePlayer('up'));
+document.getElementById('up-btn').addEventListener('click', () => movePlayer('up', console.log('eventclickerUP')));
 document.getElementById('down-btn').addEventListener('click', () => movePlayer('down'));
 document.getElementById('left-btn').addEventListener('click', () => movePlayer('left'));
 document.getElementById('right-btn').addEventListener('click', () => movePlayer('right'));
