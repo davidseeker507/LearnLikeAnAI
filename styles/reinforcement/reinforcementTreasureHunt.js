@@ -24,10 +24,10 @@ nextBtn.disabled = true;
 // TODO: Define reward values as  constants
 // Hint: Treasure should give positive points, steps should cost something
 // Example: const TREASURE_REWARD = 100;
-const TREASURE = 100;
+let TREASURE = 100;
 const StepPoints =-1;
 const Pirates =- 50;
-const gameOver = false;
+let gameOver = false;
 
 // TODO: Create game state variables
 // Hint: You need to track: grid array, player position (row and col), score, episode number, gameOver flag
@@ -51,9 +51,8 @@ const grid = Array.from({length: rows}, (_,r) =>
   Array.from({length: cols}, (_,c) => ({
     type: 'empty',
     stepCost: -1,
-    reward: null,
+    reward: 1,
     Element: null,
-    
   }))
 );
 //Array.from makes an array that is the length of rows which is 10, and then it gives each different one the index of r which would just be 0 to 9 saying that the length is 10, so it goes 0, 1, 2, 3, 4, 5, 6, 7, 8, 9. Then an arrow function to declare that from each one's one of those values from this array. Now also add an array with each different value from the array which is length columns, and then also give it a second index of columns. Then another arrow function to give each single one attribute. This creates a grid form which each one having its own corresponding value which is pretty cool.
@@ -62,10 +61,11 @@ const grid = Array.from({length: rows}, (_,r) =>
 // Hint: for (let r = 0; r < rows; r++) { for (let c = 0; c < cols; c++) { ... } }
 for (let r = 0; r < rows; r++) {
   for (let c = 0; c < cols; c++){
-    const cell = document.createElement('div');
-    cell.id = 'cell, ${r}, ${c}';
-
-    document.body.appendChild(cell);
+    const cellEl = document.createElement('div');
+    cellEl.className = 'grid-cell';
+    cellEl.id = 'cell, ${r}, ${c}';
+    grid[r][c].element = cellEl;
+    gridDisplay.appendChild(cellEl);
   }
 }
 // TODO: Inside the loops, create a div element for each cell
@@ -84,9 +84,11 @@ for (let r = 0; r < rows; r++) {
 // Hint: grid[playerRow][playerCol].type = 'player';
 // Also set its reward to 0 (no reward for starting position)
 grid[playerRows][playerCols].type = 'player';
-playerPoints = 0;
+grid[playerRows][playerCols].reward = 0;
 
-grid[rows - 1][cols - 1].type = 'treasure';
+playerPoints = 0;
+grid[rows-1][cols-1].type = 'treasure';
+grid[rows - 1][cols - 1].reward = TREASURE;
 
 // TODO: Place treasure at the bottom-right corner
 // Hint: Use rows - 1 and cols - 1 for the last position
@@ -100,17 +102,27 @@ grid[rows - 1][cols - 1].type = 'treasure';
 // Add the appropriate class based on cell.type (classList.add)
 // Optionally add emoji or text: if player show '👤', if treasure show '💰'
 function updateCellVisual(rows, cols){
-  console.log('updateCellvisual Function');
-    const cell = grid[rows][cols];
-    const el = cell.type;
-    el(classList.remove('player'));
-    el.textContent = '';
-    
-    if (cell.type === 'player'){
-      el(classList.add('player'));
-      el.textContent = '👤';
-    }
+  const cell = grid[rows][cols];
+  const el = cell.element || cell.Element; // handle current naming
+  if (!el) return; // no DOM element yet
+
+  el.classList.remove('player', 'treasure', 'empty', 'pirate');
+  el.textContent = '';
+
+  if (cell.type === 'player') {
+    el.classList.add('player');
+    el.textContent = '👤';
+  } else if (cell.type === 'treasure') {
+    el.classList.add('treasure');
+    el.textContent = '💰';
+  } else if (cell.type === 'pirate') {
+    el.classList.add('pirate');
+    el.textContent = '🏴‍☠️';
+  } else {
+    el.classList.add('empty');
+  }
 }
+
 
 // ===== STEP 5: CREATE MOVEMENT FUNCTION =====
 // TODO: Create a function called movePlayer that takes a direction parameter
@@ -118,50 +130,43 @@ function updateCellVisual(rows, cols){
 // Directions will be: 'up', 'down', 'left', 'right'
 
 function movePlayer(direction){
-  console.log('movePlayerFunction');
-  if (gameOver) {
-    return}
-  newRows = playerRows;
-  newCols = playerCols;
-  if (direction === 'up'){
-    console.log('newRows Value change ,up');
-    newRows--;
-  }
-  else if (direction === 'down'){
-    newRows++;
-  }
-  else if (direction === 'left'){
-    newCols--;
-  }
-  else if (direction === 'right'){
-    newCols++;
-  }
-  console.log(newRows);
-  console.log(newCols);
-  if ( 9 >= newRows && newRows >= 0 && 9 >= newCols && newCols >= 0 ){
-    console.log('valid, move');
-    ;
-  } else{
-    feedback.append('Cannot do action');
+  if (gameOver) return;
+
+  let newRows = playerRows;
+  let newCols = playerCols;
+
+  if (direction === 'up') newRows--;
+  else if (direction === 'down') newRows++;
+  else if (direction === 'left') newCols--;
+  else if (direction === 'right') newCols++;
+
+  //bounds check after movement
+  if (newRows < 0 || newRows >= rows || newCols < 0 || newCols >= cols) {
+    feedback.textContent = 'Cannot do action';
+    setTimeout(() => (feedback.textContent = ''), 1500);
+    return;
   }
 
-  grid[playerRows][playerCols].type = 'none';
-  grid[playerRows][playerCols].stepCost = -1;
-  updateCellVisual(newRows,newCols);
+  // clear old cell
+  grid[playerRows][playerCols].type = 'empty';
+  updateCellVisual(playerRows, playerCols);
 
+  // move
   playerRows = newRows;
   playerCols = newCols;
+  grid[playerRows][playerCols].type = 'player';
+  updateCellVisual(playerRows, playerCols);
 
-  grid[playerRows][playerCols].type = 'player'
-  handleReward();
+  handleReward(grid[playerRows][playerCols]);
 };
 
 // ===== STEP 6: CREATE REWARD HANDLING FUNCTION =====
 // TODO: Create function handleReward(cell)
 // This function receives the cell the player just moved to
 function handleReward(cell) {
-  const reward = cell.reward
-  playerPoints += cell.reward
+  console.log(cell.reward);
+  playerPoints += cell.reward;
+  console.log(`playerPoints = ${playerPoints}`)
   updateScore();
 
   if (cell.type === 'treasure'){
@@ -202,7 +207,7 @@ function endEpisode(){
   downBtn.disabled = true;
   leftBtn.disabled = true;
   rightBtn.disabled = true;
-  setTimeout(() => nextBtn.disabled =false, 3000);
+  setTimeout(() => nextBtn.disabled = false, 3000);
 }
 
 // ===== STEP 9: CREATE RESET FUNCTION =====
@@ -218,18 +223,32 @@ function endEpisode(){
 // Re-enable all buttons
 // Hide next button
 // Call updateCellVisual for all changed cells
-function resetsGame(){
+function resetsGame() {
   playerPoints = 0;
   episodeNumber++;
   gameOver = false;
-  grid[0][0].type = 'player'
-  upBtn.disabled = false;
-  downBtn.disabled = false;
-  leftBtn.disabled = false;
-  rightBtn.disabled = false;
-  TREASURE = 100;
+
+  // clear grid types
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      grid[r][c].type = 'empty';
+    }
+  }
+
+  grid[0][0].type = 'player';
+  grid[0][0].reward = 0;
+  grid[rows - 1][cols - 1].type = 'treasure';
+  grid[rows - 1][cols - 1].reward = TREASURE;
+
+  upBtn.disabled = downBtn.disabled = leftBtn.disabled = rightBtn.disabled = false;
   nextBtn.disabled = true;
-  updateCellVisual(0,0);
+  feedback.textContent = '';
+  episodeCount.textContent = `Episode: ${episodeNumber}`;
+
+  // redraw key cells
+  updateCellVisual(0, 0);
+  updateCellVisual(rows - 1, cols - 1);
+  updateScore();
 }
 
 // ===== STEP 10: ADD EVENT LISTENERS =====
@@ -240,7 +259,7 @@ document.getElementById('up-btn').addEventListener('click', () => movePlayer('up
 document.getElementById('down-btn').addEventListener('click', () => movePlayer('down'));
 document.getElementById('left-btn').addEventListener('click', () => movePlayer('left'));
 document.getElementById('right-btn').addEventListener('click', () => movePlayer('right'));
-document.getElementById('right-btn').addEventListener('click', () => (resetsGame));
+document.getElementById('reset-btn').addEventListener('click', () => resetsGame());
 
 // ===== STEP 11: INITIALIZE THE GAME =====
 // TODO: Call updateScore() to set initial score display
