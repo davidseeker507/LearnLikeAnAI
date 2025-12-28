@@ -13,6 +13,7 @@ This website is a game-style story that teaches you how AI learns by putting you
 - **Hands-On Scenarios**: Experience real challenges that AI models face during training
 - **No Prerequisites**: Designed for beginners with no prior AI knowledge required
 - **Beautiful UI**: Clean, modern interface with smooth animations
+- **Guided RL Mini-Games**: Hidden treasure/pirate grid with radar and danger sensors so players focus on learning signals, not guessing
 
 ## Learning Paths
 
@@ -23,7 +24,7 @@ Learn how AI models train on labeled data, making predictions and improving thro
 Discover how AI finds patterns in data without labels. Learn about clustering, anomaly detection, and discovering hidden structures.
 
 ### 3. Reinforcement Learning
-Experience how AI learns through trial and error, receiving rewards and penalties. Understand how game-playing AI and autonomous systems learn.
+Experience how AI learns through trial and error, receiving rewards and penalties. In the treasure hunt mini-game, the reward and hazard locations are hidden, but you get structured signals (distance-to-treasure “radar,” pirate danger sensor, move counter) to emulate how agents learn from partial information.
 
 ##  Project Structure
 
@@ -33,19 +34,12 @@ LearnLikeAnAI/
 ├── Public/
 │   ├── start.html          # Starting point for learning
 │   ├── learnmore.html      # Deep dive into AI concepts
-│   ├── supervised/         # Supervised learning modules
-│   │   ├── supervised1.html
-│   │   ├── supervised2.html
-│   │   ├── supervised3.html
-│   │   └── supervised4.html
-│   ├── unsupervised/       # Unsupervised learning modules
-│   │   ├── unsupervised1.html
-│   │   ├── unsupervised2.html
-│   │   ├── unsupervised3.html
-│   │   └── unsupervised4.html
-│   └── reinforcement/     # Reinforcement learning modules
-│       ├── reinforcement1.html
-│       ├── reinforcement2.html
+│   ├── supervised/         # Supervised learning modules (1–4)
+│   ├── unsupervised/       # Unsupervised learning modules (1–4)
+│   └── reinforcement/      # Reinforcement learning mini-games
+│       ├── reinforcement1.html   # Intro to RL
+│       ├── chooseYourOwnAdverture.html
+│       ├── treasureHunt.html     # Hidden treasure/pirate grid with radar + danger sensors
 │       ├── reinforcement3.html
 │       └── reinforcement4.html
 ├── styles/
@@ -54,7 +48,9 @@ LearnLikeAnAI/
 │   ├── learnmore.css      # Learn more page styles
 │   ├── learnmore.js       # Learn more page scripts
 │   ├── unsupervised.js    # Unsupervised learning scripts
-│   ├── reinforcement.js   # Reinforcement learning scripts
+│   ├── reinforcement/     # Reinforcement scripts
+│   │   ├── reinforcementChooseYourOwnAdventure.js
+│   │   └── reinforcementTreasureHunt.js
 │   └── logo.svg           # Logo
 ├── vercel.json            # Vercel deployment config
 └── README.md              # This file
